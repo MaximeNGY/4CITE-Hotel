@@ -39,10 +39,9 @@ cp .env.example .env
 ### Configuration (.env)
 
 ```env
+MONGO_URI=mongodb://localhost:27017/hotel_booking
 PORT=5000
-MONGO_URI=mongodb://localhost:27017/akkor-hotel
-JWT_SECRET=votre_super_secret_jwt
-JWT_EXPIRES_IN=7d
+JWT_SECRET=REPLACE_SECRET
 ```
 
 ### Execution
