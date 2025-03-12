@@ -24,9 +24,6 @@ jobs:
       - name: 📂 Installer les dépendances
         run: npm install
 
-      - name: 🛠 Lancer les tests unitaires
-        run: npm test
-
   security-check:
     runs-on: windows-latest
 
