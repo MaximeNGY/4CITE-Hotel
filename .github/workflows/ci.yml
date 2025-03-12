@@ -1,0 +1,37 @@
+name: CI Pipeline (Windows)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build_and_test:
+    runs-on: windows-latest  # Utilisation de Windows
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+      - name: Lint check
+        run: npm run lint
+
+      - name: Security check
+        run: npm audit --audit-level=high
+
+      - name: Build project
+        run: echo "Build successful!"

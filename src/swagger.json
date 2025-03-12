@@ -1,0 +1,26 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "Hotel Booking API",
+      "version": "1.0.0"
+    },
+    "paths": {
+      "/api/hotels": {
+        "get": {
+          "summary": "Liste des hôtels",
+          "responses": { "200": { "description": "Liste des hôtels" } }
+        }
+      },
+      "/api/users": {
+        "get": {
+          "summary": "Liste des utilisateurs",
+          "responses": { "200": { "description": "Liste des utilisateurs" } }
+        },
+        "delete": {
+          "summary": "Supprime un utilisateur",
+          "responses": { "200": { "description": "Supprime un utilisateur" } }
+        }
+      }
+    }
+  }
+  
