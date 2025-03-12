@@ -24,14 +24,6 @@ jobs:
       - name: 📂 Installer les dépendances
         run: npm install
 
-<<<<<<< HEAD
-      # - name: 🔍 Vérifier le formatage (ESLint)
-      #   run: npm run lint
-=======
-      #- name: 🔍 Vérifier le formatage (ESLint)
-      # run: npm run lint
->>>>>>> 87c45f88a47ed6b808ffe04c3ce6529c8376d943
-
       - name: 🛠 Lancer les tests unitaires
         run: npm test
 
