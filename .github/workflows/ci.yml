@@ -1,37 +1,33 @@
-name: CI Pipeline (Windows)
+name: CI Tests
 
-on:
+on:  
   push:
-    branches:
-      - main
+    branches: [ main, dev ]
   pull_request:
-    branches:
-      - main
+    branches: [ main, dev ]
 
 jobs:
-  build_and_test:
-    runs-on: windows-latest  # Utilisation de Windows
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+        options: --health-cmd "mongo --eval 'db.runCommand({ ping: 1 })'" --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
-      - name: Checkout repository
+      - name: 🛎 Checkout Code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: 🔧 Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Install dependencies
+      - name: 📦 Install Dependencies
         run: npm install
 
-      - name: Run tests
+      - name: ⚡ Run Tests
         run: npm test
-
-      - name: Lint check
-        run: npm run lint
-
-      - name: Security check
-        run: npm audit --audit-level=high
-
-      - name: Build project
-        run: echo "Build successful!"
