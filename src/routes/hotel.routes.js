@@ -1,7 +1,7 @@
 const express = require('express');
 const Hotel = require('../models/Hotel');
-const authMiddleware = require('../middlewares/auth.middleware'); // Vérifie si l'utilisateur est connecté
-const adminMiddleware = require('../middlewares/adminMiddleware'); // Vérifie si c'est un admin
+const authMiddleware = require('../middlewares/auth.middleware'); 
+const adminMiddleware = require('../middlewares/adminMiddleware');
 const router = express.Router();
 
 // GET : Liste des hôtels avec filtre et pagination

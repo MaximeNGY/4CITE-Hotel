@@ -41,7 +41,6 @@ describe('Booking API', () => {
       .send({ email: 'user@example.com', pseudo: 'user123', password: 'password' });
     expect(registerRes.statusCode).toBe(201);
 
-    
 
     // Login et récupération du token
     const loginRes = await request(app)
@@ -59,10 +58,20 @@ describe('Booking API', () => {
       .send({ name: "Hotel Test", location: "Paris", description: "Un hôtel de test", picture_list: [] });
     expect(hotelRes.statusCode).toBe(201);
     hotelId = hotelRes.body._id;
-  });
 
-  afterAll(async () => {
-    await mongoose.disconnect();
+    // Création du booking de test
+    const bookingData = {
+      hotel: hotelId, // Utiliser l'ID de l'hôtel créé
+      check_in: '2025-05-01',
+      check_out: '2025-05-05'
+    };
+  
+    const booking = await request(app)
+      .post('/api/bookings')
+      .set('Authorization', `Bearer ${authToken}`)
+      .send(bookingData);
+  
+    expect(booking.statusCode).toBe(201);
   });
 
   test('Créer une réservation', async () => {
@@ -83,4 +92,10 @@ describe('Booking API', () => {
     expect(res.statusCode).toBe(200);
     expect(res.body.length).toBeGreaterThan(0);
   });
+
+  afterAll(async () => {
+    await mongoose.disconnect();
+  });
+
 });
+

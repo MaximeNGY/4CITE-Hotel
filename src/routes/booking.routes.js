@@ -1,6 +1,7 @@
 const express = require('express');
 const Booking = require('../models/Booking');
 const authMiddleware = require('../middlewares/auth.middleware');
+const Hotel = require('../models/Hotel');
 const router = express.Router();
 
 // 📌 GET : Voir mes réservations
@@ -18,7 +19,7 @@ router.post('/', authMiddleware, async (req, res) => {
   try {
       const { hotel, check_in, check_out } = req.body;
 
-      // ✅ Vérifier si l'hôtel existe
+      // Vérifier si l'hôtel existe
       const existingHotel = await Hotel.findById(hotel);
       if (!existingHotel) {
           return res.status(400).json({ message: "Hôtel non trouvé" });
@@ -29,7 +30,8 @@ router.post('/', authMiddleware, async (req, res) => {
 
       res.status(201).json(newBooking);
   } catch (err) {
-      res.status(500).json({ error: err.message });
+    console.error("Erreur lors de la création de la réservation :", err);
+    res.status(500).json({ error: err.message });
   }
 });
 
