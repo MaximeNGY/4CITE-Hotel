@@ -10,12 +10,19 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Utilisation de Linux (Ubuntu) pour les runners dans GitHub Actions
 
     services:
       mongodb:
-        image: mongo:latest 
-        options: --health-cmd="curl --silent --fail localhost:27017 || exit 1" --health-interval=20s --health-timeout=10s --health-retries=10
+        image: mongo:latest  # Utilisation de l'image officielle MongoDB
+        options: --health-cmd="curl --silent --fail localhost:27017 || exit 1" --health-interval=10s --health-timeout=5s --health-retries=5
+        ports:
+          - 27017:27017  # Expose le port MongoDB pour l'accès dans les tests
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: example
+        # Vous pouvez ajouter plus d'options si nécessaire, par exemple pour les volumes ou la configuration.
+
     steps:
       - name: 📥 Cloner le repo
         uses: actions/checkout@v4
@@ -30,11 +37,11 @@ jobs:
 
       - name: 🛠 Lancer les tests unitaires
         env:
-          MONGODB_URI: mongodb://localhost:27017/test  # URL de MongoDB pour les tests
+          MONGODB_URI: mongodb://root:example@localhost:27017/test  # URL de MongoDB pour les tests (utilise le port exposé)
         run: npm test
 
   security-check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Utiliser Ubuntu pour la sécurité
 
     steps:
       - name: 📥 Cloner le repo
@@ -45,7 +52,7 @@ jobs:
 
   deploy:
     needs: [test, security-check]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Déploiement sur un runner Ubuntu
 
     steps:
       - name: 🚀 Déploiement (fake)
