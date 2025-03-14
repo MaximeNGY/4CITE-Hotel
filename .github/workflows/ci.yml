@@ -12,6 +12,11 @@ jobs:
   test:
     runs-on: windows-latest
 
+    services:
+      mongodb:
+        image: mongo:latest    # Utilise l'image officielle de MongoDB
+        options: --health-cmd="curl --silent --fail localhost:27017 || exit 1" --health-interval=10s --health-timeout=5s --health-retries=5
+
     steps:
       - name: 📥 Cloner le repo
         uses: actions/checkout@v4
@@ -25,6 +30,8 @@ jobs:
         run: npm install
 
       - name: 🛠 Lancer les tests unitaires
+        env:
+          MONGODB_URI: mongodb://localhost:27017/test  # Définit l'URL de MongoDB pour les tests
         run: npm test
 
   security-check:

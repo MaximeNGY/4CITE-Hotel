@@ -5,11 +5,20 @@ const Hotel = require('../models/Hotel');
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/test';
 
 let adminToken = '';
 
 beforeAll(async () => {
-    await mongoose.connect(process.env.MONGO_URI);
+    const connectToDatabase = async () => {
+        // Vérifier si une connexion existe déjà
+        if (mongoose.connection.readyState === 0) {
+          await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/test', {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+          });
+        }
+      };
     await User.deleteMany();
     await Hotel.deleteMany();
 
