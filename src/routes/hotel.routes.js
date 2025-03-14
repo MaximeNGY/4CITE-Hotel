@@ -4,7 +4,7 @@ const authMiddleware = require('../middlewares/auth.middleware'); // Vérifie si
 const adminMiddleware = require('../middlewares/adminMiddleware'); // Vérifie si c'est un admin
 const router = express.Router();
 
-// 📌 GET : Liste des hôtels avec filtre et pagination
+// GET : Liste des hôtels avec filtre et pagination
 router.get('/', async (req, res) => {
     try {
         const { limit = 10, sortBy = 'name' } = req.query;
@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// 📌 POST : Ajouter un hôtel (Admin uniquement)
+// POST : Ajouter un hôtel (Admin uniquement)
 router.post('/', adminMiddleware, async (req, res) => {
     try {
         const { name, location, description, picture_list } = req.body;
@@ -27,7 +27,7 @@ router.post('/', adminMiddleware, async (req, res) => {
     }
 });
 
-// 📌 PUT : Modifier un hôtel (Admin uniquement)
+// PUT : Modifier un hôtel (Admin uniquement)
 router.put('/:id', adminMiddleware, async (req, res) => {
     try {
         const updatedHotel = await Hotel.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -38,7 +38,7 @@ router.put('/:id', adminMiddleware, async (req, res) => {
     }
 });
 
-// 📌 DELETE : Supprimer un hôtel (Admin uniquement)
+// DELETE : Supprimer un hôtel (Admin uniquement)
 router.delete('/:id', adminMiddleware, async (req, res) => {
     try {
         const deletedHotel = await Hotel.findByIdAndDelete(req.params.id);

@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../server'); // Importer l'instance d'Express
+const app = require('../../server');
 const mongoose = require('mongoose');
 const User = require('../models/User');
 
