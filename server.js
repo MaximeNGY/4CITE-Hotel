@@ -11,6 +11,10 @@ const bookingRoutes = require('./src/routes/booking.routes');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./src/swagger.json');
 const app = express();
+const cors = require('cors');
+
+// Appliquer CORS à toutes les requêtes
+app.use(cors());
 
 // Middleware pour parser le JSON
 app.use(express.json());
@@ -22,6 +26,7 @@ mongoose.connect(process.env.MONGO_URI, {
 })
 .then(() => console.log('✅ MongoDB connecté'))
 .catch(err => console.error('❌ Erreur de connexion MongoDB :', err));
+
 
 if (process.env.NODE_ENV !== "test") {
     app.listen(process.env.PORT, () => {
